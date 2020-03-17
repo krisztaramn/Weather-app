@@ -16,12 +16,19 @@ let days = [
 let day = days[now.getDay()];
 let time = hour + ":" + minutes;
 
-document.querySelector("#time").innerHTML = time;
+let currentDate = document.querySelector("#time");
+currentDate.innerHTML = time;
 
-document.querySelector(".current-day").innerHTML = day;
+let currentDay = document.querySelector(".current-day");
+currentDay.innerHTML = day;
 
 function showCity(event) {
   event.preventDefault();
+  let currentDay = document.querySelector(".current-day");
+  currentDay.innerHTML = day;
+  let city = document.querySelector("#search-input");
+  let h1 = document.querySelector("h1");
+  h1.innerHTML = city.value;
   let now = new Date();
   let hour = now.getHours();
   let minutes = now.getMinutes();
@@ -29,45 +36,42 @@ function showCity(event) {
     minutes = `0${minutes}`;
   }
   let time = hour + ":" + minutes;
-  document.querySelector("#time").innerHTML = time;
-
-  let city = document.querySelector("#search-input").value;
-  document.querySelector("h1").innerHTML = city;
+  let currentDate = document.querySelector("#time");
+  currentDate.innerHTML = time;
 
   function displayWeather(response) {
-    document.querySelector(".current-temperature").innerHTML = Math.round(
-      response.data.main.temp
-    );
-    document.querySelector("#description").innerHTML =
-      response.data.weather[0].description;
+    let currentTemperature = document.querySelector(".current-temperature");
+    currentTemperature.innerHTML = Math.round(response.data.main.temp);
+    let description = document.querySelector("#description");
+    description.innerHTML = response.data.weather[0].description;
     document.getElementById("celsius").style.fontSize = "1.5em";
     document.getElementById("fahrenheit").style.fontSize = "1em";
 
     function showFahrenheit(event) {
       event.preventDefault();
-      document.querySelector(".current-temperature").innerHTML = Math.round(
+      let fahrenheitValue = document.querySelector(".current-temperature");
+      fahrenheitValue.innerHTML = Math.round(
         (response.data.main.temp * 9) / 5 + 32
       );
       document.getElementById("celsius").style.fontSize = "1em";
       document.getElementById("fahrenheit").style.fontSize = "1.5em";
     }
-    document
-      .querySelector(".fahrenheit")
-      .addEventListener("click", showFahrenheit);
+    let fahrenheit = document.querySelector(".fahrenheit");
+    fahrenheit.addEventListener("click", showFahrenheit);
 
     function showCelsius(event) {
       event.preventDefault();
-      document.querySelector(".current-temperature").innerHTML = Math.round(
-        response.data.main.temp
-      );
+      let celsiusValue = document.querySelector(".current-temperature");
+      celsiusValue.innerHTML = Math.round(response.data.main.temp);
       document.getElementById("celsius").style.fontSize = "1.5em";
       document.getElementById("fahrenheit").style.fontSize = "1em";
     }
-    document.querySelector(".celsius").addEventListener("click", showCelsius);
+    let celsius = document.querySelector(".celsius");
+    celsius.addEventListener("click", showCelsius);
   }
 
   let apiKey = "c30b70227281106a3ea7b3125756ea7f";
-  let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+  let url = `https://api.openweathermap.org/data/2.5/weather?q=${city.value}&appid=${apiKey}&units=metric`;
   axios.get(url).then(displayWeather);
 }
 let search = document.querySelector("form");
@@ -86,36 +90,36 @@ function showCurrentLocation(event) {
   navigator.geolocation.getCurrentPosition(showPosition);
 
   function displayLocation(response) {
-    document.querySelector("h1").innerHTML = response.data.name;
-    document.querySelector(".current-temperature").innerHTML = Math.round(
-      response.data.main.temp
-    );
-    document.querySelector("#description").innerHTML =
-      response.data.weather[0].description;
+    let h1 = document.querySelector("h1");
+    h1.innerHTML = response.data.name;
+    let currentTemperature = document.querySelector(".current-temperature");
+    currentTemperature.innerHTML = Math.round(response.data.main.temp);
+    let description = document.querySelector("#description");
+    description.innerHTML = response.data.weather[0].description;
     document.getElementById("celsius").style.fontSize = "1.5em";
     document.getElementById("fahrenheit").style.fontSize = "1em";
 
     function showFahrenheit(event) {
       event.preventDefault();
-      document.querySelector(".current-temperature").innerHTML = Math.round(
+      let fahrenheitValue = document.querySelector(".current-temperature");
+      fahrenheitValue.innerHTML = Math.round(
         (response.data.main.temp * 9) / 5 + 32
       );
       document.getElementById("celsius").style.fontSize = "1em";
       document.getElementById("fahrenheit").style.fontSize = "1.5em";
     }
-    document
-      .querySelector(".fahrenheit")
-      .addEventListener("click", showFahrenheit);
+    let fahrenheit = document.querySelector(".fahrenheit");
+    fahrenheit.addEventListener("click", showFahrenheit);
 
     function showCelsius(event) {
       event.preventDefault();
-      document.querySelector(".current-temperature").innerHTML = Math.round(
-        response.data.main.temp
-      );
+      let celsiusValue = document.querySelector(".current-temperature");
+      celsiusValue.innerHTML = Math.round(response.data.main.temp);
       document.getElementById("celsius").style.fontSize = "1.5em";
       document.getElementById("fahrenheit").style.fontSize = "1em";
     }
-    document.querySelector(".celsius").addEventListener("click", showCelsius);
+    let celsius = document.querySelector(".celsius");
+    celsius.addEventListener("click", showCelsius);
   }
 }
 
